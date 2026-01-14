@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Testme CBT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{background:#1b1b1b;color:#f3f3f3;font-family:Segoe UI;margin:0;padding:0}
+.topbar{background:#222;padding:15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.timer{color:#e9204f;font-size:18px}
+.container{padding:20px}
+.question-box{background:#222;padding:20px;border-radius:10px}
+.options button{display:block;width:100%;margin:10px 0;padding:12px;background:#1b1b1b;border:1px solid #333;color:#fff;border-radius:8px;cursor:pointer}
+.options button.active{background:#e9204f;color:#fff;border-color:#e9204f}
+.controls{display:flex;justify-content:space-between;margin-top:20px;flex-wrap:wrap}
+.controls button{padding:12px 30px;background:#e9204f;border:none;color:#fff;border-radius:30px;cursor:pointer;margin-top:10px}
+#submitBtn{background:#0fa;}
+.info{margin-top:10px;color:#ccc}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <div id="subject"></div>
+    <div class="timer" id="timer">25:00</div>
+</div>
+
+<div class="container">
+    <div class="question-box">
+        <h3 id="questionText"></h3>
+        <div class="options" id="options"></div>
+    </div>
+
+    <div class="controls">
+        <button onclick="prev()">Previous</button>
+        <button onclick="next()">Next</button>
+        <button onclick="submitQuiz()" id="submitBtn" style="display:none;">Submit</button>
+    </div>
+
+    <div class="info" id="progress"></div>
+</div>
+
+<script>
+// Grab subject and count from setup
+const subject = localStorage.getItem("testme_subject");
+const count = parseInt(localStorage.getItem("testme_count"));
+document.getElementById("subject").innerText = subject;
+
+// Full question bank
+const questions = {
+ BIO101: [
+  // 80 placeholder questions
+  ...Array.from({length:80},(_,i)=>({
+    q:`BIO101 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ],
+
+ CHM101: [
+  ...Array.from({length:80},(_,i)=>({
+    q:`CHM101 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ],
+
+ PHY101: [
+  ...Array.from({length:80},(_,i)=>({
+    q:`PHY101 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ],
+
+ MTH105: [
+  ...Array.from({length:80},(_,i)=>({
+    q:`MTH105 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ],
+
+ MTH101: [
+  ...Array.from({length:80},(_,i)=>({
+    q:`MTH101 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ],
+
+ COS101: [
+  ...Array.from({length:80},(_,i)=>({
+    q:`COS101 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ],
+
+ GST111: [
+  ...Array.from({length:80},(_,i)=>({
+    q:`GST111 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ],
+
+ STS101: [
+  ...Array.from({length:80},(_,i)=>({
+    q:`STS101 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ],
+
+ PCP101: [
+  ...Array.from({length:80},(_,i)=>({
+    q:`PCP101 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ],
+
+ ANP101: [
+  ...Array.from({length:80},(_,i)=>({
+    q:`ANP101 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ],
+
+ PHY105: [
+  ...Array.from({length:80},(_,i)=>({
+    q:`PHY105 Question ${i+1}?`,
+    o:["Option A","Option B","Option C","Option D"],
+    a:Math.floor(Math.random()*4)
+  }))
+ ]
+};
+
+// Prepare quiz (random selection)
+let bank = questions[subject] || [];
+let shuffled = bank.sort(()=>0.5-Math.random()).slice(0,count);
+
+let index = 0;
+let answers = new Array(shuffled.length).fill(null);
+
+function showQuestion(){
+ let q = shuffled[index];
+ document.getElementById("questionText").innerText = (index+1)+". "+q.q;
+ let html = "";
+ q.o.forEach((opt,i)=>{
+  let cls = answers[index] === i ? "active" : "";
+  html += `<button class="${cls}" onclick="pickAnswer(${i})">${opt}</button>`;
+ });
+ document.getElementById("options").innerHTML = html;
+ document.getElementById("progress").innerText = `Answered: ${answers.filter(a=>a!=null).length} / ${shuffled.length}`;
+ document.getElementById("submitBtn").style.display = answers.includes(null) ? "none" : "inline-block";
+}
+
+function pickAnswer(i){
+ answers[index] = i;
+ showQuestion();
+}
+
+function next(){
+ if(index < shuffled.length - 1){
+  index++;
+  showQuestion();
+ }
+}
+
+function prev(){
+ if(index > 0){
+  index--;
+  showQuestion();
+ }
+}
+
+function submitQuiz(){
+ localStorage.setItem("testme_answers", JSON.stringify(answers));
+ localStorage.setItem("testme_quiz", JSON.stringify(shuffled));
+ window.location.href = "result.html";
+}
+
+// Timer
+let time = 25 * 60;
+const timerEl = document.getElementById("timer");
+const interval = setInterval(()=>{
+ time--;
+ let m = Math.floor(time / 60);
+ let s = time % 60;
+ timerEl.innerText = `${m}:${s < 10 ? "0" : ""}${s}`;
+ if(time <= 0){
+  clearInterval(interval);
+  submitQuiz();
+ }
+}, 1000);
+
+// Anti‑cheat basics
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+ if(e.key === "F12" || (e.ctrlKey && (e.key === "U"|| e.key === "S"|| e.key === "P"))){
+  e.preventDefault();
+ }
+});
+
+showQuestion();
+</script>
+
+</body>
+</html>

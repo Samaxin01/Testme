@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Testme - CBT Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+body{
+    background:#1b1b1b;
+    color:#f3f3f3;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    background:#222;
+    border-radius:20px;
+    padding:40px;
+    box-shadow:0 0 40px rgba(233,32,79,0.35);
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo i{
+    font-size:60px;
+    color:#e9204f;
+}
+
+.logo h1{
+    margin-top:10px;
+    font-size:40px;
+    color:#e9204f;
+}
+
+.logo span{
+    color:#f3f3f3;
+}
+
+.content{
+    text-align:center;
+}
+
+.content h2{
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+.content p{
+    color:#ccc;
+    line-height:1.7;
+    margin-bottom:30px;
+    font-size:16px;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:20px;
+    margin-bottom:40px;
+}
+
+.feature{
+    background:#1b1b1b;
+    padding:25px 20px;
+    border-radius:15px;
+    border:1px solid #333;
+    transition:0.3s;
+}
+
+.feature:hover{
+    transform:translateY(-5px);
+    border-color:#e9204f;
+}
+
+.feature i{
+    font-size:32px;
+    color:#e9204f;
+    margin-bottom:10px;
+}
+
+.feature h3{
+    margin-bottom:8px;
+    font-size:18px;
+}
+
+.feature p{
+    color:#bbb;
+    font-size:14px;
+}
+
+.start-btn{
+    background:#e9204f;
+    color:#fff;
+    border:none;
+    padding:16px 60px;
+    font-size:18px;
+    border-radius:50px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.start-btn:hover{
+    background:#ff3b66;
+    transform:scale(1.05);
+}
+
+/* -------- MOBILE RESPONSIVE -------- */
+@media(max-width:768px){
+    .container{
+        padding:25px;
+        border-radius:15px;
+    }
+
+    .logo i{
+        font-size:45px;
+    }
+
+    .logo h1{
+        font-size:30px;
+    }
+
+    .content h2{
+        font-size:22px;
+    }
+
+    .content p{
+        font-size:14px;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .start-btn{
+        width:100%;
+        padding:15px;
+        font-size:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <i class="fas fa-laptop-code"></i>
+        <h1>Test<span>me</span></h1>
+    </div>
+
+    <div class="content">
+        <h2>Welcome to Testme CBT Platform</h2>
+        <p>
+            Testme is a secure Computer Based Test (CBT) system designed for schools and students.
+            It helps you practice exams in a real CBT environment, improving speed, accuracy,
+            and confidence.
+        </p>
+
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-clock"></i>
+                <h3>Timed Exams</h3>
+                <p>Real CBT countdown timer.</p>
+            </div>
+
+            <div class="feature">
+                <i class="fas fa-lock"></i>
+                <h3>Secure</h3>
+                <p>Anti-cheat protection enabled.</p>
+            </div>
+
+            <div class="feature">
+                <i class="fas fa-chart-line"></i>
+                <h3>Instant Result</h3>
+                <p>See your score immediately.</p>
+            </div>
+
+            <div class="feature">
+                <i class="fas fa-book"></i>
+                <h3>Multiple Subjects</h3>
+                <p>Test different courses.</p>
+            </div>
+        </div>
+
+        <button class="start-btn" onclick="location.href='subjects.html'">
+            Start Test
+        </button>
+    </div>
+
+</div>
+
+</body>
+</html>

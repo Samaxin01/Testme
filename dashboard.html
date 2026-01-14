@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Testme Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{background:#1b1b1b;color:#f3f3f3;font-family:Segoe UI;padding:20px;}
+.container{max-width:900px;margin:auto;}
+h1{text-align:center;color:#e9204f;margin-bottom:20px;}
+.subject-card{background:#222;padding:15px;margin-bottom:15px;border-radius:15px;box-shadow:0 0 20px rgba(233,32,79,0.3);}
+.badges span{background:#e9204f;color:#fff;padding:5px 10px;margin-right:5px;border-radius:10px;}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Testme Dashboard</h1>
+<div id="dashboard"></div>
+</div>
+
+<script>
+const dash = JSON.parse(localStorage.getItem("testme_dashboard")||"{}");
+const badges = JSON.parse(localStorage.getItem("testme_badges")||"{}");
+
+const dashboardDiv = document.getElementById("dashboard");
+for(let subj in dash){
+    let d = dash[subj];
+    let b = badges[subj] || [];
+    dashboardDiv.innerHTML += `
+    <div class="subject-card">
+        <h3>${subj}</h3>
+        <p>Attempts: ${d.attempts}</p>
+        <p>Highest Score: ${d.highest}</p>
+        <p>Badges: <span class="badges">${b.map(x=>`<span>${x}</span>`).join("")}</span></p>
+    </div>
+    `;
+}
+</script>
+</body>
+</html>

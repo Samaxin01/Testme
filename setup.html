@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quiz Setup | Testme</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+body{
+    background:#1b1b1b;
+    color:#f3f3f3;
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:600px;
+    margin:auto;
+    background:#222;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 0 30px rgba(233,32,79,0.3);
+}
+
+h1{
+    text-align:center;
+    color:#e9204f;
+    margin-bottom:10px;
+}
+
+.subject{
+    text-align:center;
+    margin-bottom:25px;
+    font-size:18px;
+    color:#ccc;
+}
+
+.options{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+    gap:15px;
+    margin-bottom:30px;
+}
+
+.option{
+    background:#1b1b1b;
+    padding:18px;
+    border-radius:15px;
+    text-align:center;
+    cursor:pointer;
+    border:2px solid transparent;
+    transition:0.3s;
+}
+
+.option:hover{
+    border-color:#e9204f;
+}
+
+.option.active{
+    background:#e9204f;
+    color:#fff;
+}
+
+.start-btn{
+    width:100%;
+    padding:15px;
+    background:#e9204f;
+    border:none;
+    color:#fff;
+    font-size:18px;
+    border-radius:50px;
+    cursor:pointer;
+    display:none;
+}
+
+.start-btn:hover{
+    background:#ff3b66;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Quiz Setup</h1>
+    <div class="subject" id="subjectText"></div>
+
+    <p style="text-align:center;margin-bottom:15px;">Select number of questions</p>
+
+    <div class="options">
+        <div class="option" data-count="15">15 Questions</div>
+        <div class="option" data-count="30">30 Questions</div>
+        <div class="option" data-count="40">40 Questions</div>
+        <div class="option" data-count="45">45 Questions</div>
+        <div class="option" data-count="70">70 Questions</div>
+    </div>
+
+    <button class="start-btn" id="startBtn">Start Quiz</button>
+</div>
+
+<script>
+const subject = localStorage.getItem("testme_subject");
+document.getElementById("subjectText").innerText = "Subject: " + subject;
+
+let selectedCount = 0;
+
+document.querySelectorAll(".option").forEach(opt=>{
+    opt.addEventListener("click",()=>{
+        document.querySelectorAll(".option").forEach(o=>o.classList.remove("active"));
+        opt.classList.add("active");
+
+        selectedCount = opt.getAttribute("data-count");
+        document.getElementById("startBtn").style.display = "block";
+    });
+});
+
+document.getElementById("startBtn").addEventListener("click",()=>{
+    localStorage.setItem("testme_count", selectedCount);
+    window.location.href = "quiz.html";
+});
+</script>
+
+</body>
+</html>

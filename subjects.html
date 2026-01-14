@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Select Subject | Testme</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+body{
+    background:#1b1b1b;
+    color:#f3f3f3;
+    min-height:100vh;
+    padding:20px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.header h1{
+    color:#e9204f;
+    font-size:32px;
+}
+
+.header p{
+    color:#ccc;
+}
+
+.subjects{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+    gap:20px;
+    max-width:900px;
+    margin:auto;
+}
+
+.subject{
+    background:#222;
+    padding:25px 15px;
+    border-radius:15px;
+    text-align:center;
+    cursor:pointer;
+    border:2px solid transparent;
+    transition:0.3s;
+}
+
+.subject i{
+    font-size:30px;
+    color:#e9204f;
+    margin-bottom:10px;
+}
+
+.subject:hover{
+    transform:scale(1.05);
+    border-color:#e9204f;
+}
+
+.subject.active{
+    background:#e9204f;
+    color:#fff;
+}
+
+.subject.active i{
+    color:#fff;
+}
+
+/* Mobile */
+@media(max-width:600px){
+    .header h1{font-size:24px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>Select Your Subject</h1>
+    <p>Choose one course to begin your CBT</p>
+</div>
+
+<div class="subjects">
+
+    <div class="subject" data-subject="BIO101"><i class="fas fa-dna"></i><p>BIO 101</p></div>
+    <div class="subject" data-subject="CHM101"><i class="fas fa-flask"></i><p>CHM 101</p></div>
+    <div class="subject" data-subject="PHY101"><i class="fas fa-atom"></i><p>PHY 101</p></div>
+    <div class="subject" data-subject="MTH105"><i class="fas fa-square-root-alt"></i><p>MTH 105</p></div>
+    <div class="subject" data-subject="MTH101"><i class="fas fa-calculator"></i><p>MTH 101</p></div>
+    <div class="subject" data-subject="COS101"><i class="fas fa-desktop"></i><p>COS 101</p></div>
+    <div class="subject" data-subject="GST111"><i class="fas fa-book"></i><p>GST 111</p></div>
+    <div class="subject" data-subject="STS101"><i class="fas fa-globe"></i><p>STS 101</p></div>
+    <div class="subject" data-subject="PCP101"><i class="fas fa-microscope"></i><p>PCP 101</p></div>
+    <div class="subject" data-subject="ANP101"><i class="fas fa-brain"></i><p>ANP 101</p></div>
+    <div class="subject" data-subject="PHY105"><i class="fas fa-bolt"></i><p>PHY 105</p></div>
+
+</div>
+
+<script>
+document.querySelectorAll(".subject").forEach(item=>{
+    item.addEventListener("click",()=>{
+        const subject = item.getAttribute("data-subject");
+        localStorage.setItem("testme_subject", subject);
+
+        item.classList.add("active");
+
+        setTimeout(()=>{
+            window.location.href = "setup.html";
+        },300);
+    });
+});
+</script>
+
+</body>
+</html>

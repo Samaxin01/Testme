@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Test Result | Testme</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+    background:#1b1b1b;
+    color:#f3f3f3;
+    font-family:"Segoe UI", sans-serif;
+    padding:20px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    background:#222;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 0 30px rgba(233,32,79,0.3);
+}
+
+h1{
+    text-align:center;
+    color:#e9204f;
+    margin-bottom:20px;
+}
+
+.info{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.info p{
+    font-size:18px;
+    margin:5px 0;
+}
+
+.question-review{
+    background:#1b1b1b;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.correct{color:#0f0;}
+.wrong{color:#e9204f;}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Test Result</h1>
+    <div class="info">
+        <p id="subject"></p>
+        <p id="score"></p>
+        <p id="percentage"></p>
+    </div>
+
+    <div id="review"></div>
+</div>
+
+<script>
+const quiz = JSON.parse(localStorage.getItem("testme_quiz")||"[]");
+const answers = JSON.parse(localStorage.getItem("testme_answers")||"[]");
+const subject = localStorage.getItem("testme_subject") || "N/A";
+
+document.getElementById("subject").innerText = "Subject: "+subject;
+
+let correctCount=0;
+quiz.forEach((q,i)=>{
+    if(answers[i]==q.a) correctCount++;
+});
+
+document.getElementById("score").innerText = "Score: "+correctCount+" / "+quiz.length;
+document.getElementById("percentage").innerText = "Percentage: "+((correctCount/quiz.length)*100).toFixed(2)+"%";
+
+const reviewDiv = document.getElementById("review");
+quiz.forEach((q,i)=>{
+    let status = answers[i]==q.a ? "correct" : "wrong";
+    let correctAns = q.o[q.a];
+    reviewDiv.innerHTML += `
+    <div class="question-review">
+        <strong>Q${i+1}:</strong> ${q.q}<br>
+        <strong>Your Answer:</strong> <span class="${status}">${answers[i]!=null?q.o[answers[i]]:"Not answered"}</span><br>
+        <strong>Correct Answer:</strong> ${correctAns}
+    </div>
+    `;
+});
+</script>
+
+</body>
+</html>
